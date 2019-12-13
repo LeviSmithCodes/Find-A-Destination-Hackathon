@@ -10,7 +10,8 @@ export default class PostsController {
       //NOTE  each route gets registered as a .get, .post, .put, or .delete, the first parameter of each method is a string to be concatinated onto the base url registered with the route in main. The second parameter is the method that will be run when this route is hit.
       .get("/:id", this.getById)
       .get("/:name", this.getByName)
-      .post("", this.create)
+      .get("/:id/posts", this.getPostsByUserId) //api/users/:id/posts
+      .post("", this.create) //api/
       .put("/:id", this.edit)
       .delete("/:id", this.delete);
   }
@@ -27,6 +28,15 @@ export default class PostsController {
   async getByName(req, res, next) {
     try {
       let data = await usersService.getByName(req.params.name);
+      return res.send(data);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getPostsByUserId(req, res, next) {
+    try {
+      let data = await postsService.getPostsByUserId(req.params.id);
       return res.send(data);
     } catch (error) {
       next(error);

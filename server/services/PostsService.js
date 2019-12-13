@@ -1,10 +1,14 @@
 import mongoose from "mongoose";
 import Post from "../models/Post";
 import ApiError from "../Utils/ApiError";
+import usersService from "./UsersService";
 
 const _repository = mongoose.model("Post", Post);
 
 class PostService {
+  async getPostsByUserId(userId) {
+    return await _repository.find({ userId });
+  }
   async getAll() {
     return await _repository.find({});
   }
@@ -18,8 +22,11 @@ class PostService {
     }
   }
 
-  async create(rawData) {
-    return await _repository.create(rawData);
+  async create(userId, rawData) {
+    let user = await usersService.getById(userId);
+    rawData.userId = user._id;
+    let data = await _repository.create(rawData);
+    return data;
   }
 
   async edit(id, update) {

@@ -7,10 +7,10 @@ export default class PostsController {
     this.router = express
       .Router()
       //NOTE  each route gets registered as a .get, .post, .put, or .delete, the first parameter of each method is a string to be concatinated onto the base url registered with the route in main. The second parameter is the method that will be run when this route is hit.
-      .get("", this.getAll)
+      .get("", this.getAll) //api/:id/posts
       .get("/:id/comments", this.getCommentsByPostId)
       .get("/:id", this.getById)
-      .post("", this.create)
+      .post("/:id", this.create)
       .put("/:id", this.edit)
       .delete("/:id", this.delete);
   }
@@ -43,7 +43,7 @@ export default class PostsController {
 
   async create(req, res, next) {
     try {
-      let data = await postsService.create(req.body);
+      let data = await postsService.create(req.params.id, req.body);
       return res.status(201).send(data);
     } catch (error) {
       next(error);
