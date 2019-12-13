@@ -29,20 +29,29 @@ class PostService {
     return data;
   }
 
-  async edit(id, update) {
+  async edit(obj, update) {
+    //obj is from postsController to find correct user and post, respectively. Properties match what is in Schema
     try {
-      let data = await _repository.findOneAndUpdate({ _id: id }, update, {
-        new: true
-      });
+      let data = await _repository.findOneAndUpdate(
+        { _id: obj.postId, userId: obj.userId },
+        update,
+        {
+          new: true
+        }
+      );
       return data;
     } catch (error) {
       throw new ApiError("Invalid Update ID", 400);
     }
   }
 
-  async delete(id) {
+  async delete(obj) {
+    // same as async edit
     try {
-      let data = await _repository.findOneAndRemove({ _id: id });
+      let data = await _repository.findOneAndRemove({
+        _id: obj.postId,
+        userId: obj.userId
+      });
     } catch (error) {
       throw new ApiError("Invalid ID", 400);
     }

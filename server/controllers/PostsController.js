@@ -11,8 +11,8 @@ export default class PostsController {
       .get("/:id/comments", this.getCommentsByPostId)
       .get("/:id", this.getById)
       .post("/:id", this.create)
-      .put("/:id", this.edit)
-      .delete("/:id", this.delete);
+      .put("/:postId/:userId", this.edit) //pass both id's to find correct post and "authenticate" user
+      .delete("/:postId/:userId", this.delete); // same as .put
   }
 
   async getCommentsByPostId(req, res, next) {
@@ -52,7 +52,11 @@ export default class PostsController {
 
   async edit(req, res, next) {
     try {
-      let data = await postsService.edit(req.params.id, req.body);
+      // Pass object with both postId and userId to postsService
+      let data = await postsService.edit(
+        { postId: req.params.postId, userId: req.params.userId },
+        req.body
+      );
       return res.send(data);
     } catch (error) {
       next(error);
@@ -61,7 +65,11 @@ export default class PostsController {
 
   async delete(req, res, next) {
     try {
-      let data = await postsService.delete(req.params.id);
+      // same as async edit
+      let data = await postsService.delete({
+        postId: req.params.postId,
+        userId: req.params.userId
+      });
       return res.send("Successfully deleted");
     } catch (error) {
       next(error);
