@@ -23,26 +23,32 @@ class PostsService {
     let res = await _sandBox.get("/posts");
     store.commit(
       "posts",
-      res.data.posts.map(p => new Post(p))
+      res.data.map(p => new Post(p))
     );
   }
-  async editPost(postId, updatedPost) {
-    let postToUpdate = store.State.posts.find(p => p.id == postId);
-    postToUpdate.description = updatedPost.description;
-    postToUpdate.rating = updatedPost.rating;
-    let res = await _sandBox.put(postId, postToUpdate).then(res => {
-      this.getPosts();
-    });
+  async editPost(postId, userId, updatedPost) {
+    let postToUpdate = store.State.posts.find(p => p.postId == postId);
+    if (postToUpdate.userId == userId) {
+      postToUpdate.description = updatedPost.description;
+      postToUpdate.rating = updatedPost.rating;
+      let res = await _sandBox
+        .put(`/'${postId}'/'${userId}'`, postToUpdate)
+        .then(res => {
+          this.getPosts();
+        });
+    }
   }
-  async deletePost(postId) {
-    let postToDelete = store.State.posts.find(post => post.id == postId);
-    _sandBox.delete(`/${postId}`, postToDelete).then(res => {
-      this.getPosts();
-    });
+  async deletePost(postId, userId) {
+    let postToDelete = store.State.posts.find(post => post.postId == postId);
+    if (postToDelete.userId == userId) {
+      _sandBox.delete(`/'${postId}'/'${userId}'`, postToDelete).then(res => {
+        this.getPosts();
+      });
+    }
   }
 
   async getActivePostById(postId) {
-    let activePost = store.State.posts.find(p => p.id == postId);
+    let activePost = store.State.posts.find(p => p.postId == postId);
     store.commit("activePost", activePost);
   }
 }

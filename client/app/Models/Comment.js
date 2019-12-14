@@ -3,7 +3,9 @@ export default class Comment {
     this.upvote = data.upvote || 0;
     this.description = data.description;
     this.downvote = data.downvote || 0;
-    this.id = data.postId;
+    this.postId = data.postId;
+    this.userId = data.userId;
+    this.commentId = data.id;
   }
 
   get commentTemplate() {
@@ -17,21 +19,27 @@ export default class Comment {
         <button class="btn btn-danger" type="button">
           <p>Downvotes: ${this.downvote}</p>
         </button>
-      </div>
-    </div>`;
-  }
-
-  get createCommentTemplate() {
-    return `<form class="form-group">
-        <label for="comment">Write a Comment</label>
+        <button class="btn btn-danger" onclick="app.commentsController.deleteComment(${this.userId}, ${this.commentId}, ${this.postId})">Delete Comment</button>
+        <button class="btn btn-success" onclick="app.commentsController.toggleEditFormOn()">
+        Edit Comment
+        </button>
+    <div class="d-none" id="editCommentForm">
+      <form
+        class="form-group"
+        onsubmit="app.commentsController.editComment(event, ${this.userId}, ${this.commentId}, ${this.postId}), app.commentsController.toggleEditFormOff()"
+      >
+        <label for="description">Edit Comment</label>
         <textarea
-          name="comment"
+          name="description"
           class="form-control"
-          cols="30"
-          rows="3"
+          cols="20"
+          rows="2"
           maxlength="200"
         ></textarea>
         <button class="btn btn-success">Submit Comment</button>
-      </form>`;
+      </form>
+    </div>
+      </div>
+    </div>`;
   }
 }
