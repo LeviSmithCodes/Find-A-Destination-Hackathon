@@ -76,7 +76,7 @@ export default class Post {
             <div class="card-body">
               <h5 class="card-title">${this.title}</h5>
               <p class="card-text">${this.rating}</p>
-              <button class="btn" type="button" onclick="app.postsController.getPostById(${this.id}), app.postsController.makeActivePost(${this.id})">See Full Post</button>
+              <button class="btn" type="button" onclick="app.postsController.getActivePostById(${this.id})">See Full Post</button>
             </div>
           </div>
         </div>

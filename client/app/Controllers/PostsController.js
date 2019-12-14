@@ -9,13 +9,17 @@ function _drawPosts() {
   posts.forEach(post => (postTemplate += post.previewPostTemplate));
   document.getElementById("posts").innerHTML = postTemplate;
 }
-
+function _drawActivePost() {
+  let Activepost = store.State.activePost;
+  document.getElementById("posts").innerHTML = Activepost.singlePostTemplate;
+}
 //Public
 
 export default class PostsController {
   constructor() {
     //debugger;
     store.subscribe("posts", _drawPosts);
+    store.subscribe("activePost", _drawActivePost);
   }
 
   toggleFormOn() {
@@ -70,24 +74,27 @@ export default class PostsController {
     }
   }
   async deletePost(postId) {
-    try {
-      await PostsService.deletePost(postId);
-    } catch (error) {
-      console.error(error);
-    }
+    swal({
+      title: "Oh really?",
+      text: "Once deleted, there is no going back..",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true
+    }).then(willDelete => {
+      if (willDelete) {
+        swal("Bye-bye! Your post has been eviscerated!", {
+          icon: "success"
+        });
+        PostsService.deletePost(postId);
+      } else {
+        swal("Yeah, that's what I thought.");
+      }
+    });
   }
 
-  async getPostById(postId) {
+  async getActivePostById(postId) {
     try {
-      await PostsService.getPostById(postId);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  makeActivePost(postId) {
-    try {
-      PostsService.makeActivePost(postId);
+      await PostsService.getActivePostById(postId);
     } catch (error) {
       console.error(error);
     }

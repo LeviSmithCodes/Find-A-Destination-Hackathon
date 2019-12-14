@@ -41,12 +41,10 @@ class PostsService {
     });
   }
 
-  makeActivePost(postId) {
+  async getActivePostById(postId) {
     let activePost = store.State.posts.find(p => p.id == postId);
     store.commit("activePost", activePost);
   }
-
-  getPostById(postId) {}
 }
 
 const postsService = new PostsService();
