@@ -83,28 +83,6 @@ export default class Post {
     `;
   }
 
-  get createPostTemplate() {
-    return ` <form class="text-left p-3" onsubmit="app.postsController.createPost(event)">
-                    <div class="form-group">
-                        <label for="title">Title</label>
-                        <input type="text" name="title" class="form-control" placeholder="Enter Title..." required>
-                    </div>
-                    <div class="form-group">
-                        <label for="model">Model</label>
-                        <input type="text" name="model" class="form-control" placeholder="Enter Model..." required>
-                    </div>
-                    <div class="form-group">
-                        <label for="year">Year</label>
-                        <input type="number" name="year" class="form-control" placeholder="Enter Year..." required>
-                    </div>
-                    <div class="form-group">
-                        <label for="price">Price</label>
-                        <input type="number" name="price" class="form-control" placeholder="Enter Price..." required>
-                    </div>
-              <button type="submit" class="btn btn-primary btn-block">Submit</button>
-                    </form>`;
-  }
-
   getCommentTemplate() {
     let template = "";
     this.comments.forEach(c => {});

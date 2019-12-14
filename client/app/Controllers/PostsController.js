@@ -52,7 +52,9 @@ export default class PostsController {
         title: formData.title.value,
         imgUrl: formData.image.value,
         description: formData.description.value,
-        rating: formData.rating.value
+        rating: formData.rating.value,
+        upvote: 0,
+        downvote: 0
       };
       PostsService.createPost(newPost);
       formData.reset();
