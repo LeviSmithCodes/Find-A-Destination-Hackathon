@@ -14,6 +14,7 @@ class PostsService {
       .post(`/posts/${user.id}/`, newPost)
       .then(res => {
         this.getPosts();
+        console.log(newPost);
       })
       .catch(err => {
         console.error(err);
@@ -42,8 +43,9 @@ class PostsService {
   }
   async deletePost(postId, userId) {
     let postToDelete = store.State.posts.find(post => post.postId == postId);
+    debugger;
     if (postToDelete.userId == userId) {
-      _sandBox.delete(`/'${postId}'/'${userId}'`, postToDelete).then(res => {
+      _sandBox.delete(`/${postId}/${userId}`, postToDelete).then(res => {
         this.getPosts();
       });
     }
@@ -51,6 +53,8 @@ class PostsService {
 
   async getActivePostById(postId) {
     let activePost = store.State.posts.find(p => p.postId == postId);
+    console.log("active post from service", activePost);
+
     store.commit("activePost", activePost);
   }
 }

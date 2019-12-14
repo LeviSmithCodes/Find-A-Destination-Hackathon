@@ -232,7 +232,7 @@
         <div class="col-md-12 d-none" id="createPost">
           <form
             class="text-left p-3"
-            onsubmit="app.postsController.createPost(event), app.postsController.toggleFormOff()"
+            onsubmit="app.postsController.createPost(event, ), app.postsController.toggleFormOff()"
           >
             <div class="form-group">
               <label for="title">Title</label>
@@ -260,7 +260,6 @@
                 name="description"
                 class="form-control"
                 placeholder="Enter Description..."
-                required
               />
             </div>
             <div class="form-group">

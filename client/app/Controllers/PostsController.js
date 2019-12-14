@@ -44,21 +44,23 @@ export default class PostsController {
     }
   }
   async createPost(event) {
-    try {
-      event.preventDefault();
-      let formData = event.target;
-      let newPost = {
-        title: formData.title.value,
-        imgUrl: formData.image.value || " ",
-        description: formData.description.value || " ",
-        rating: formData.rating.value || 0,
-        upvote: 0,
-        downvote: 0
-      };
-      postsService.createPost(newPost);
-      formData.reset();
-    } catch (error) {
-      console.error(error);
+    if (store.State.activeUser.id) {
+      try {
+        event.preventDefault();
+        let formData = event.target;
+        let newPost = {
+          title: formData.title.value,
+          imgUrl: formData.image.value || " ",
+          description: formData.description.value || " ",
+          rating: formData.rating.value || 0,
+          upvote: 0,
+          downvote: 0
+        };
+        postsService.createPost(newPost);
+        formData.reset();
+      } catch (error) {
+        console.error(error);
+      }
     }
   }
 
@@ -86,6 +88,7 @@ export default class PostsController {
         swal("Bye-bye! Your post has been eviscerated!", {
           icon: "success"
         });
+        debugger;
         postsService.deletePost(postId, userId);
       } else {
         swal("Yeah, that's what I thought.");

@@ -82,7 +82,7 @@ export default class Post {
         <button
           class="btn"
           type="button"
-          onclick="app.postsController.deletePost(${this.postId}, ${this.userId})"
+          onclick="app.postsController.deletePost('${this.postId}', '${this.userId}')"
         >Delete Post
         </button>
       </div>
@@ -90,7 +90,7 @@ export default class Post {
     <div class="d-none" id="editPost">
       <form
         class="text-left p-3"
-        onsubmit="app.postsController.editPost(${this.postId}, ${this.userId}, event), app.postsController.toggleEditFormOff()"
+        onsubmit="app.postsController.editPost('${this.postId}', '${this.userId}', event), app.postsController.toggleEditFormOff()"
         >
         <div class="form-group">
           <label for="description">Description</label>
@@ -193,7 +193,7 @@ export default class Post {
   }
 
   get previewPostTemplate() {
-    let imageTemplate = `<div class="col-md-4 basic-post">
+    let imageTemplate = /* html */ `<div class="col-md-4 basic-post">
     <div class="card" style="width: 18rem;">
       <img src="${this.url}" class="card-img-top" alt="..." />`;
     let questionTemplate = `<div class="col-md-4 basic-post">
@@ -201,14 +201,15 @@ export default class Post {
     let template = `<div class="card-body">
     <h5 class="card-title">${this.title}</h5>
     <p class="card-text">${this.rating}</p>
-    <button class="btn" type="button" onclick="app.postsController.getActivePostById(${this.postId}, app.commentsController.getCommentsById(${this.postId}))">See Full Post</button>
+    <button class="button btn" type="button" onclick="app.postsController.getActivePostById('${this.postId}'), app.commentsController.getCommentsById('${this.postId}')">See Full Post</button>
     </div>
     </div>
     </div>`;
-    if (this.url) {
+
+    if (this.url !== " ") {
       imageTemplate += template;
       return imageTemplate;
-    } else if (!this.url) {
+    } else if (this.url == " ") {
       questionTemplate += template;
       return questionTemplate;
     }

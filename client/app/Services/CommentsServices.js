@@ -21,7 +21,7 @@ class CommentsService {
 
   async getCommentsById(postId) {
     store.State.comments.length = 0;
-    let res = await _sandBox.get(`/'${postId}'/comments`);
+    let res = await _sandBox.get(`/posts/${postId}/comments`);
     store.commit(
       "comments",
       res.data.map(c => new Comment(c))
