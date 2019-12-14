@@ -1,0 +1,18 @@
+.basic-post {
+  display: flex;
+  justify-content: center;
+  margin: 5pt 0 5pt 0;
+}
+
+.carousel-item {
+  width: auto;
+  margin-right: 0;
+}
+
+#navbar-col {
+  padding: 0px;
+}
+
+.post-section-header {
+  border-bottom: 3pt solid black;
+}

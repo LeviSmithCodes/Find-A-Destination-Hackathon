@@ -1,19 +1,326 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="assets/style.css" />
+    <title>Final Destination</title>
+  </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="assets/style.css">
-    <title>Document</title>
-</head>
+  <body>
+    <header class="container-fluid">
+      <div class="row">
+        <div id="navbar-col" class="col-md-12">
+          <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Home</a>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
 
-<body>
-
-
-
+            <div
+              class="collapse navbar-collapse d-flex justify-content-around"
+              id="navbarSupportedContent"
+            >
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <button
+                    type="button"
+                    onclick="app.postsController.getPosts()"
+                    class="btn btn-primary"
+                  >
+                    Get Posts
+                  </button>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Link</a>
+                </li>
+              </ul>
+              <h2 id="pageTitle" class="text-white">
+                FINAL DESTINATION
+              </h2>
+              <form class="form-inline my-2 my-lg-0">
+                <input
+                  class="form-control mr-sm-2"
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search"
+                />
+                <button
+                  class="btn btn-outline-success my-2 my-sm-0"
+                  type="submit"
+                >
+                  Search
+                </button>
+              </form>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </header>
+    <main class="container-fluid">
+      <div class="row d-flex justify-content-center">
+        <div
+          id="carouselExampleCaptions"
+          class="carousel slide"
+          data-ride="carousel"
+        >
+          <ol class="carousel-indicators">
+            <li
+              data-target="#carouselExampleCaptions"
+              data-slide-to="0"
+              class="active"
+            ></li>
+            <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+            <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+          </ol>
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img
+                src="//placehold.it/600x400"
+                class="d-block w-100"
+                alt="..."
+              />
+              <div class="carousel-caption d-none d-md-block">
+                <h5>First slide label</h5>
+                <p>
+                  Nulla vitae elit libero, a pharetra augue mollis interdum.
+                </p>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <img
+                src="//placehold.it/600x400"
+                class="d-block w-100"
+                alt="..."
+              />
+              <div class="carousel-caption d-none d-md-block">
+                <h5>Second slide label</h5>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <img
+                src="//placehold.it/600x400"
+                class="d-block w-100"
+                alt="..."
+              />
+              <div class="carousel-caption d-none d-md-block">
+                <h5>Third slide label</h5>
+                <p>
+                  Praesent commodo cursus magna, vel scelerisque nisl
+                  consectetur.
+                </p>
+              </div>
+            </div>
+          </div>
+          <a
+            class="carousel-control-prev"
+            href="#carouselExampleCaptions"
+            role="button"
+            data-slide="prev"
+          >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a
+            class="carousel-control-next"
+            href="#carouselExampleCaptions"
+            role="button"
+            data-slide="next"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+      </div>
+      <div class="row">
+        <div
+          class="col-md-12 d-flex justify-content-between post-section-header"
+        >
+          <h3>Posts</h3>
+          <button
+            type="button"
+            onclick="app.postsController.toggleFormOn()"
+            class="btn btn-success"
+          >
+            Create Post
+          </button>
+        </div>
+        <div class="col-md-12 d-none" id="createPost">
+          <form
+            class="text-left p-3"
+            onsubmit="app.postsController.createPost(event), app.postsController.toggleFormOff()"
+          >
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input
+                type="text"
+                name="title"
+                class="form-control"
+                placeholder="Enter Title..."
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="image">Image Url</label>
+              <input
+                type="text"
+                name="image"
+                class="form-control"
+                placeholder="Enter Image Url..."
+              />
+            </div>
+            <div class="form-group">
+              <label for="description">Description</label>
+              <input
+                type="text"
+                name="description"
+                class="form-control"
+                placeholder="Enter Description..."
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="rating">Rating</label>
+              <input
+                type="number"
+                name="rating"
+                class="form-control"
+                placeholder="Enter Rating(Number)..."
+              />
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">
+              Submit
+            </button>
+          </form>
+        </div>
+      </div>
+      <div class="row d-flex justify-content-center" id="posts">
+        <div class="col-md-4 basic-post">
+          <div class="card" style="width: 18rem;">
+            <img src="//placehold.it/286x150" class="" alt="..." />
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Review and Rating go here</p>
+              <a href="#" class="btn btn-primary">Get Full Post</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 basic-post">
+          <div class="card" style="width: 18rem;">
+            <img src="//placehold.it/286x150" class="card-img-top" alt="..." />
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Review and Rating go here</p>
+              <a href="#" class="btn btn-primary">Get Full Post</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 basic-post">
+          <div class="card" style="width: 18rem;">
+            <img src="//placehold.it/286x150" class="card-img-top" alt="..." />
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Review and Rating go here</p>
+              <a href="#" class="btn btn-primary">Get Full Post</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 basic-post">
+          <div class="card" style="width: 18rem;">
+            <img src="//placehold.it/286x150" class="card-img-top" alt="..." />
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Review and Rating go here</p>
+              <a href="#" class="btn btn-primary">Get Full Post</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 basic-post">
+          <div class="card" style="width: 18rem;">
+            <img src="//placehold.it/286x150" class="card-img-top" alt="..." />
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Review and Rating go here</p>
+              <a href="#" class="btn btn-primary">Get Full Post</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 basic-post">
+          <div class="card" style="width: 18rem;">
+            <img src="//placehold.it/286x150" class="card-img-top" alt="..." />
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Review and Rating go here</p>
+              <a href="#" class="btn btn-primary">Get Full Post</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 basic-post">
+          <div class="card" style="width: 18rem;">
+            <img src="//placehold.it/286x150" class="card-img-top" alt="..." />
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Review and Rating go here</p>
+              <a href="#" class="btn btn-primary">Get Full Post</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 basic-post">
+          <div class="card" style="width: 18rem;">
+            <img src="//placehold.it/286x150" class="card-img-top" alt="..." />
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Review and Rating go here</p>
+              <a href="#" class="btn btn-primary">Get Full Post</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 basic-post">
+          <div class="card" style="width: 18rem;">
+            <img src="//placehold.it/286x150" class="card-img-top" alt="..." />
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Review and Rating go here</p>
+              <a href="#" class="btn btn-primary">Get Full Post</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="container-fluid">Here is the footer</footer>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="app/main.js" type="module"></script>
-</body>
-
+  </body>
 </html>
