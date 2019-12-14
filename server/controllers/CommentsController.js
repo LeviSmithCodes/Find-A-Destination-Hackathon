@@ -6,14 +6,17 @@ export default class CommentsController {
     this.router = express
       .Router()
       //NOTE  each route gets registered as a .get, .post, .put, or .delete, the first parameter of each method is a string to be concatinated onto the base url registered with the route in main. The second parameter is the method that will be run when this route is hit.
-      .post("", this.create)
-      .put("/:id", this.edit)
-      .delete("/:id", this.delete);
+      .post("/:postId/:userId", this.create)
+      .put("/:commentId/:userId", this.edit)
+      .delete("/:commentId/:userId", this.delete);
   }
 
   async create(req, res, next) {
     try {
-      let data = await commentsService.create(req.body);
+      let data = await commentsService.create(
+        { postId: req.params.postId, userId: req.params.userId },
+        req.body
+      );
       return res.status(201).send(data);
     } catch (error) {
       next(error);
@@ -22,7 +25,10 @@ export default class CommentsController {
 
   async edit(req, res, next) {
     try {
-      let data = await commentsService.edit(req.params.id, req.body);
+      let data = await commentsService.edit(
+        { commentId: req.params.commentId, userId: req.params.userId },
+        req.body
+      );
       return res.send(data);
     } catch (error) {
       next(error);
@@ -31,7 +37,10 @@ export default class CommentsController {
 
   async delete(req, res, next) {
     try {
-      let data = await commentsService.delete(req.params.id);
+      let data = await commentsService.delete({
+        postId: req.params.postId,
+        userId: req.params.userId
+      });
       return res.send("Successfully deleted");
     } catch (error) {
       next(error);

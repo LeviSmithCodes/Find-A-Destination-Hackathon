@@ -8,7 +8,8 @@ const Comment = new Schema(
     upvote: { type: Number, required: true },
     downvote: { type: Number, required: true },
 
-    postId: { type: ObjectId, ref: "Post", required: true }
+    postId: { type: ObjectId, ref: "Post", required: true },
+    userId: { type: ObjectId, ref: "User", required: true }
     // TODO add user
   },
   { timestamps: true, toJSON: { virtuals: true } }

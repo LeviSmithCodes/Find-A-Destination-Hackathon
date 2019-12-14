@@ -5,28 +5,39 @@ import ApiError from "../Utils/ApiError";
 const _repository = mongoose.model("Comment", Comment);
 
 class CommentService {
-  async create(rawData) {
-    return await _repository.create(rawData);
+  async create(obj, rawData) {
+    // let parentId = await _repository.find({ postId: obj.postId, userId: obj.userId });
+    rawData.userId = obj.userId;
+    rawData.postId = obj.postId;
+    let data = await _repository.create(rawData);
+    return data;
   }
 
   async getCommentsByPostId(postId) {
     return await _repository.find({ postId });
   }
 
-  async edit(id, update) {
+  async edit(obj, update) {
     try {
-      let data = await _repository.findOneAndUpdate({ _id: id }, update, {
-        new: true
-      });
+      let data = await _repository.findOneAndUpdate(
+        { _id: obj.commentId, userId: obj.userId },
+        update,
+        {
+          new: true
+        }
+      );
       return data;
     } catch (error) {
       throw new ApiError("Invalid Update ID", 400);
     }
   }
 
-  async delete(id) {
+  async delete(obj) {
     try {
-      let data = await _repository.findOneAndRemove({ _id: id });
+      let data = await _repository.findOneAndRemove({
+        _id: obj.postId,
+        userId: obj.userId
+      });
     } catch (error) {
       throw new ApiError("Invalid ID", 400);
     }

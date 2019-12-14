@@ -3,7 +3,7 @@ import postsService from "../services/PostsService";
 import commentsService from "../services/CommentsService";
 import usersService from "../services/UsersService";
 
-export default class PostsController {
+export default class UsersController {
   constructor() {
     this.router = express
       .Router()
