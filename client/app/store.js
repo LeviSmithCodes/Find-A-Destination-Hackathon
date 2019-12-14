@@ -1,11 +1,19 @@
 import Post from "./Models/Post.js";
+import User from "./Models/User.js";
+import Comment from "./Models/Comment.js";
 
 let _state = {
   /**@type {Post[]} */
   posts: [],
   /**@type {Post} */
   // @ts-ignore
-  activePost: {}
+  activePost: {},
+  /**@type {User[]} */
+  users: [],
+  /**@type {User} */
+  activeUser: {},
+  /**@type {Comment[]} */
+  comments: []
 };
 
 /** Collection of listeners to be called based on keyed state changes
@@ -13,7 +21,10 @@ let _state = {
  */
 let _listeners = {
   posts: [],
-  activePost: []
+  activePost: [],
+  users: [],
+  activeUser: [],
+  comments: []
 };
 
 //NOTE You should not need to change the code from this point down

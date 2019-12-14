@@ -9,7 +9,7 @@ export default class UsersController {
       .Router()
       //NOTE  each route gets registered as a .get, .post, .put, or .delete, the first parameter of each method is a string to be concatinated onto the base url registered with the route in main. The second parameter is the method that will be run when this route is hit.
       .get("/:id", this.getById)
-      .get("/:name", this.getByName)
+      .get("/user/:name", this.getByName)
       .get("/:id/posts", this.getPostsByUserId) //api/users/:id/posts
       .post("", this.create) //api/
       .put("/:id", this.edit)
