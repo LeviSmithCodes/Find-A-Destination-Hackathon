@@ -1,5 +1,5 @@
-import store from "../store.js";
 import postsService from "../Services/PostsService.js";
+import store from "../store.js";
 
 //Private
 function _drawPosts() {
