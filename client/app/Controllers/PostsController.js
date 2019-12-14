@@ -1,6 +1,5 @@
-import PostsService from "../Services/PostsService.js";
-import store from "../store.js";
 import postsService from "../Services/PostsService.js";
+import store from "../store.js";
 
 //Private
 function _drawPosts() {
@@ -39,7 +38,7 @@ export default class PostsController {
 
   async getPosts() {
     try {
-      await PostsService.getPosts();
+      await postsService.getPosts();
     } catch (error) {
       console.error(error);
     }
@@ -56,7 +55,7 @@ export default class PostsController {
         upvote: 0,
         downvote: 0
       };
-      PostsService.createPost(newPost);
+      postsService.createPost(newPost);
       formData.reset();
     } catch (error) {
       console.error(error);
@@ -70,7 +69,7 @@ export default class PostsController {
         description: formData.description.value,
         rating: formData.rating.value
       };
-      await PostsService.editPost(postId, updatedPost);
+      await postsService.editPost(postId, updatedPost);
     } catch (error) {
       console.error(error);
     }
@@ -87,7 +86,7 @@ export default class PostsController {
         swal("Bye-bye! Your post has been eviscerated!", {
           icon: "success"
         });
-        PostsService.deletePost(postId);
+        postsService.deletePost(postId);
       } else {
         swal("Yeah, that's what I thought.");
       }
@@ -96,7 +95,7 @@ export default class PostsController {
 
   async getActivePostById(postId) {
     try {
-      await PostsService.getActivePostById(postId);
+      await postsService.getActivePostById(postId);
     } catch (error) {
       console.error(error);
     }
