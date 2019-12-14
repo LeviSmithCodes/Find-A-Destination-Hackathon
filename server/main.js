@@ -6,6 +6,7 @@ import DbContext from "./db/dbConfig";
 // TODO IMPORT CONTROLLERS
 import PostsController from "./controllers/PostsController";
 import CommentsController from "./controllers/CommentsController";
+import UsersController from "./controllers/UsersController";
 
 const port = process.env.PORT || 3000;
 
@@ -41,6 +42,7 @@ server.use(bp.json());
 // TODO ADD ROUTERS HERE
 server.use("/api/posts", new PostsController().router);
 server.use("/api/comments", new CommentsController().router);
+server.use("/api/users", new UsersController().router);
 
 //NOTE Everything below this line always stays the same
 

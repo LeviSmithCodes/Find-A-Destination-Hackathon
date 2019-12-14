@@ -1,40 +1,42 @@
 import express from "express";
 import postsService from "../services/PostsService";
 import commentsService from "../services/CommentsService";
+import usersService from "../services/UsersService";
 
-export default class PostsController {
+export default class UsersController {
   constructor() {
     this.router = express
       .Router()
       //NOTE  each route gets registered as a .get, .post, .put, or .delete, the first parameter of each method is a string to be concatinated onto the base url registered with the route in main. The second parameter is the method that will be run when this route is hit.
-      .get("", this.getAll) //api/:id/posts
-      .get("/:id/comments", this.getCommentsByPostId)
       .get("/:id", this.getById)
-      .post("/:id", this.create)
-      .put("/:postId/:userId", this.edit) //pass both id's to find correct post and "authenticate" user
-      .delete("/:postId/:userId", this.delete); // same as .put
+      .get("/:name", this.getByName)
+      .get("/:id/posts", this.getPostsByUserId) //api/users/:id/posts
+      .post("", this.create) //api/
+      .put("/:id", this.edit)
+      .delete("/:id", this.delete);
   }
 
-  async getCommentsByPostId(req, res, next) {
-    try {
-      let data = await commentsService.getCommentsByPostId(req.params.id);
-      return res.send(data);
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  async getAll(req, res, next) {
-    try {
-      let data = await postsService.getAll();
-      return res.send(data);
-    } catch (error) {
-      next(error);
-    }
-  }
   async getById(req, res, next) {
     try {
-      let data = await postsService.getById(req.params.id);
+      let data = await usersService.getById(req.params.id);
+      return res.send(data);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getByName(req, res, next) {
+    try {
+      let data = await usersService.getByName(req.params.name);
+      return res.send(data);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getPostsByUserId(req, res, next) {
+    try {
+      let data = await postsService.getPostsByUserId(req.params.id);
       return res.send(data);
     } catch (error) {
       next(error);
@@ -43,7 +45,7 @@ export default class PostsController {
 
   async create(req, res, next) {
     try {
-      let data = await postsService.create(req.params.id, req.body);
+      let data = await usersService.create(req.body);
       return res.status(201).send(data);
     } catch (error) {
       next(error);
@@ -52,11 +54,7 @@ export default class PostsController {
 
   async edit(req, res, next) {
     try {
-      // Pass object with both postId and userId to postsService
-      let data = await postsService.edit(
-        { postId: req.params.postId, userId: req.params.userId },
-        req.body
-      );
+      let data = await usersService.edit(req.params.id, req.body);
       return res.send(data);
     } catch (error) {
       next(error);
@@ -65,11 +63,7 @@ export default class PostsController {
 
   async delete(req, res, next) {
     try {
-      // same as async edit
-      let data = await postsService.delete({
-        postId: req.params.postId,
-        userId: req.params.userId
-      });
+      let data = await usersService.delete(req.params.id);
       return res.send("Successfully deleted");
     } catch (error) {
       next(error);
