@@ -1,11 +1,7 @@
-import UsersService from "../Services/UsersService.js";
+import usersService from "../Services/UsersService.js";
 import store from "../store.js";
 
 //Private
-function _draw() {
-  let users = store.State.users;
-  console.log(users);
-}
 
 function _drawActiveUser() {
   let activeUser = store.State.activeUser;
@@ -75,7 +71,7 @@ export default class UsersController {
       };
       console.log(newUser);
 
-      await UsersService.createUser(newUser);
+      await usersService.createUser(newUser);
       formData.reset();
     } catch (error) {
       console.error(error);
@@ -91,7 +87,7 @@ export default class UsersController {
       };
       console.log("user login", user);
 
-      await UsersService.findUser(user);
+      await usersService.findUser(user);
       formData.reset();
     } catch (error) {
       console.error(error);
@@ -106,7 +102,7 @@ export default class UsersController {
         name: formData.name.value
       };
       console.log("edited user", editedUser);
-      await UsersService.editUser(userId, editedUser);
+      await usersService.editUser(userId, editedUser);
       formData.reset();
     } catch (error) {
       console.error(error);
@@ -114,6 +110,6 @@ export default class UsersController {
   }
 
   async deleteUser(userId) {
-    UsersService.deleteUser(userId);
+    usersService.deleteUser(userId);
   }
 }
