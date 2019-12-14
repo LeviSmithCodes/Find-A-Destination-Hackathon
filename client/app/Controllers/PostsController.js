@@ -18,6 +18,7 @@ export default class PostsController {
   constructor() {
     store.subscribe("posts", _drawPosts);
     store.subscribe("activePost", _drawActivePost);
+    postsService.getPosts();
   }
 
   toggleFormOn() {
@@ -68,6 +69,7 @@ export default class PostsController {
   }
 
   async editPost(postId, userId, event) {
+    debugger;
     event.preventDefault();
     try {
       let formData = event.target;

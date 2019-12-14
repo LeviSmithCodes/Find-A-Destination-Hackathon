@@ -23,12 +23,12 @@ export default class CommentsController {
   toggleCommentFormOff() {
     document.querySelector("#createCommentForm").classList.add("d-none");
   }
-  toggleEditFormOn() {
-    document.getElementById("editCommentForm").classList.remove("d-none");
+  toggleEditFormOn(elemId) {
+    document.querySelector("#c-" + elemId).classList.remove("d-none");
   }
 
-  toggleEditFormOff() {
-    document.querySelector("#editCommentForm").classList.add("d-none");
+  toggleEditFormOff(elemId) {
+    document.querySelector("#c-" + elemId).classList.add("d-none");
   }
 
   async getCommentsById(postId) {
@@ -38,39 +38,29 @@ export default class CommentsController {
       console.error(error);
     }
   }
-  async createComment(event, postId, userId) {
-    debugger;
+  async createComment(event, postId) {
+    event.preventDefault();
     try {
-      if (store.State.activeUser.id) {
-        event.preventDefault();
-        let formData = event.target;
-        let newComment = {
-          description: formData.description.value,
-          upvote: 0,
-          downvote: 0
-        };
-        commentsService.createComment(newComment, postId, userId);
-        formData.reset();
-      }
+      let formData = event.target;
+      let newComment = {
+        description: formData.description.value,
+        upvote: 0,
+        downvote: 0,
+        postId
+      };
+      commentsService.createComment(newComment);
+      formData.reset();
     } catch (error) {
       console.error(error);
     }
   }
 
-  async editComment(commentId, userId, event, postId) {
+  async editComment(commentId) {
+    event.preventDefault();
     try {
-      if (store.State.activeUser.id == userId) {
-        let formData = event.target;
-        let updatedComment = {
-          description: formData.description.value
-        };
-        await commentsService.editComment(
-          commentId,
-          userId,
-          updatedComment,
-          postId
-        );
-      }
+      let form = event.target;
+      await commentsService.editComment(commentId, form.name.value);
+      this.toggleEditFormOff(commentId);
     } catch (error) {
       console.error(error);
     }
