@@ -8,8 +8,10 @@ let _sandBox = axios.create({
 
 class PostsService {
   async createPost(newPost) {
+    let user = store.State.activeUser;
+    console.log("create post", user);
     _sandBox
-      .post("/posts", newPost)
+      .post(`/posts/${user.id}/`, newPost)
       .then(res => {
         this.getPosts();
       })
