@@ -36,7 +36,7 @@ class PostsService {
       postToUpdate.description = updatedPost.description;
       postToUpdate.rating = updatedPost.rating;
       let res = await _sandBox
-        .put(`/'${postId}'/'${userId}'`, postToUpdate)
+        .put(`posts/${postId}/${userId}`, postToUpdate)
         .then(res => {
           this.getPosts();
         });
@@ -44,7 +44,6 @@ class PostsService {
   }
   async deletePost(postId, userId) {
     let postToDelete = store.State.posts.find(post => post.postId == postId);
-    debugger;
     if (postToDelete.userId == userId) {
       _sandBox.delete(`/posts/${postId}/${userId}`, postToDelete).then(res => {
         this.getPosts();

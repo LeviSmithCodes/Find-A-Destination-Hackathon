@@ -16,7 +16,6 @@ function _drawActivePost() {
 
 export default class PostsController {
   constructor() {
-    //debugger;
     store.subscribe("posts", _drawPosts);
     store.subscribe("activePost", _drawActivePost);
   }
@@ -69,6 +68,7 @@ export default class PostsController {
   }
 
   async editPost(postId, userId, event) {
+    event.preventDefault();
     try {
       let formData = event.target;
       let updatedPost = {
@@ -92,7 +92,6 @@ export default class PostsController {
         swal("Bye-bye! Your post has been eviscerated!", {
           icon: "success"
         });
-        debugger;
         postsService.deletePost(postId, userId);
       } else {
         swal("Yeah, that's what I thought.");
@@ -101,7 +100,6 @@ export default class PostsController {
   }
 
   async getActivePostById(postId) {
-    debugger;
     console.log("post id", postId);
 
     try {
