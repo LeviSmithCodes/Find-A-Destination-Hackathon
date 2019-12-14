@@ -49,9 +49,9 @@ export default class PostsController {
       let formData = event.target;
       let newPost = {
         title: formData.title.value,
-        imgUrl: formData.image.value,
-        description: formData.description.value,
-        rating: formData.rating.value,
+        imgUrl: formData.image.value || " ",
+        description: formData.description.value || " ",
+        rating: formData.rating.value || 0,
         upvote: 0,
         downvote: 0
       };
@@ -62,19 +62,19 @@ export default class PostsController {
     }
   }
 
-  async editPost(postId, event) {
+  async editPost(postId, userId, event) {
     try {
       let formData = event.target;
       let updatedPost = {
         description: formData.description.value,
         rating: formData.rating.value
       };
-      await postsService.editPost(postId, updatedPost);
+      await postsService.editPost(postId, userId, updatedPost);
     } catch (error) {
       console.error(error);
     }
   }
-  async deletePost(postId) {
+  async deletePost(postId, userId) {
     swal({
       title: "Oh really?",
       text: "Once deleted, there is no going back..",
@@ -86,7 +86,7 @@ export default class PostsController {
         swal("Bye-bye! Your post has been eviscerated!", {
           icon: "success"
         });
-        postsService.deletePost(postId);
+        postsService.deletePost(postId, userId);
       } else {
         swal("Yeah, that's what I thought.");
       }
