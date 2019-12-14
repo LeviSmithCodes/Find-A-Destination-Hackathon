@@ -39,6 +39,7 @@ export default class CommentsController {
     }
   }
   async createComment(event, postId, userId) {
+    debugger;
     try {
       if (store.State.activeUser.id) {
         event.preventDefault();
@@ -74,7 +75,7 @@ export default class CommentsController {
       console.error(error);
     }
   }
-  async deleteComment(commentId, userId, postId) {
+  async deleteComment(userId, commentId, postId) {
     swal({
       title: "Oh really?",
       text: "Once deleted, there is no going back..",
@@ -86,7 +87,7 @@ export default class CommentsController {
         swal("Bye-bye! Your comment has been eviscerated!", {
           icon: "success"
         });
-        commentsService.deleteComment(commentId, userId, postId);
+        commentsService.deleteComment(userId, commentId, postId);
       } else {
         swal("Yeah, that's what I thought.");
       }

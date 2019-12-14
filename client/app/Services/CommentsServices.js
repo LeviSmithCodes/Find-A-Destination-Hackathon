@@ -9,7 +9,7 @@ let _sandBox = axios.create({
 class CommentsService {
   async createComment(newComment, postId, userId) {
     _sandBox
-      .post(`/comments/'${postId}'/'${userId}`, newComment)
+      .post(`/comments/${postId}/${userId}`, newComment)
       .then(res => {
         this.getCommentsById(postId);
       })
@@ -20,8 +20,11 @@ class CommentsService {
   //constructor() {}
 
   async getCommentsById(postId) {
+    debugger;
     store.State.comments.length = 0;
     let res = await _sandBox.get(`/posts/${postId}/comments`);
+    console.log("pulling comments", res);
+
     store.commit(
       "comments",
       res.data.map(c => new Comment(c))
@@ -38,15 +41,12 @@ class CommentsService {
       });
   }
 
-  async deleteComment(commentId, userId, postId) {
+  async deleteComment(userId, commentId, postId) {
     let commentToDelete = store.State.comments.find(
       comment => comment.commentId == commentId
     );
-    _sandBox
-      .delete(`/'${commentId}'/'${userId}'`, commentToDelete)
-      .then(res => {
-        this.getCommentsById(postId);
-      });
+    await _sandBox.delete(`comments/${commentId}/${userId}`);
+    this.getCommentsById(postId);
   }
 }
 

@@ -13,7 +13,7 @@ export default class Post {
   }
 
   get singlePostTemplate() {
-    let titleOnlyTemplate = `<div class="col-md-12 basic-post">
+    let titleOnlyTemplate = /* html */ `<div class="col-md-12 basic-post">
     <div class="card" style="width: 18rem;">
       <h3 class="card-title">${this.title}</h3>`;
     let reviewNoImage = `<div class="col-md-12 basic-post">
@@ -120,7 +120,7 @@ export default class Post {
     <div class="d-none" id="createCommentForm">
       <form
         class="form-group"
-        onsubmit="app.commentsController.createComment(event, ${this.userId}, ${this.postId}), app.commentsController.toggleCommentFormOff()"
+        onsubmit="app.commentsController.createComment(event, '${this.postId}', '${this.userId}'), app.commentsController.toggleCommentFormOff()"
       >
         <label for="description">Write a Comment</label>
         <textarea

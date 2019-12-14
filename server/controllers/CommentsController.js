@@ -38,9 +38,12 @@ export default class CommentsController {
   async delete(req, res, next) {
     try {
       let data = await commentsService.delete({
-        postId: req.params.postId,
+        commentId: req.params.commentId,
         userId: req.params.userId
       });
+      if (!data) {
+        throw new Error("Invalid Id");
+      }
       return res.send("Successfully deleted");
     } catch (error) {
       next(error);

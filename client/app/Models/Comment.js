@@ -19,7 +19,7 @@ export default class Comment {
         <button class="btn btn-danger" type="button">
           <p>Downvotes: ${this.downvote}</p>
         </button>
-        <button class="btn btn-danger" onclick="app.commentsController.deleteComment(${this.userId}, ${this.commentId}, ${this.postId})">Delete Comment</button>
+        <button class="btn btn-danger" onclick="app.commentsController.deleteComment('${this.userId}', '${this.commentId}', '${this.postId}')">Delete Comment</button>
         <button class="btn btn-success" onclick="app.commentsController.toggleEditFormOn()">
         Edit Comment
         </button>

@@ -34,8 +34,8 @@ class CommentService {
 
   async delete(obj) {
     try {
-      let data = await _repository.findOneAndRemove({
-        _id: obj.postId,
+      return await _repository.findOneAndRemove({
+        _id: obj.commentId,
         userId: obj.userId
       });
     } catch (error) {
