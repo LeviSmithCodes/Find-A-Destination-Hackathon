@@ -14,7 +14,7 @@ class PostsService {
       .post(`/posts/${user.id}/`, newPost)
       .then(res => {
         this.getPosts();
-        console.log(newPost);
+        console.log("new post", newPost);
       })
       .catch(err => {
         console.error(err);
@@ -28,6 +28,7 @@ class PostsService {
       "posts",
       res.data.map(p => new Post(p))
     );
+    console.log("all posts", res.data);
   }
   async editPost(postId, userId, updatedPost) {
     let postToUpdate = store.State.posts.find(p => p.postId == postId);
@@ -45,7 +46,7 @@ class PostsService {
     let postToDelete = store.State.posts.find(post => post.postId == postId);
     debugger;
     if (postToDelete.userId == userId) {
-      _sandBox.delete(`/${postId}/${userId}`, postToDelete).then(res => {
+      _sandBox.delete(`/posts/${postId}/${userId}`, postToDelete).then(res => {
         this.getPosts();
       });
     }

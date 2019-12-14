@@ -8,7 +8,7 @@ export default class Post {
     this.rating = data.rating || 0;
     this.upvote = data.upvote || 0;
     this.downvote = data.downvote || 0;
-    this.userId = data.userid;
+    this.userId = data.userId;
     this.postId = data.id;
   }
 

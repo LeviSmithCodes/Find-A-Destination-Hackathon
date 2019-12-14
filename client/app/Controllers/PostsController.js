@@ -45,6 +45,8 @@ export default class PostsController {
   }
   async createPost(event) {
     if (store.State.activeUser.id) {
+      console.log("activeUser id for post", store.State.activeUser.id);
+
       try {
         event.preventDefault();
         let formData = event.target;
@@ -57,6 +59,8 @@ export default class PostsController {
           downvote: 0
         };
         postsService.createPost(newPost);
+        console.log("newPost back from service", newPost);
+
         formData.reset();
       } catch (error) {
         console.error(error);
@@ -97,6 +101,9 @@ export default class PostsController {
   }
 
   async getActivePostById(postId) {
+    debugger;
+    console.log("post id", postId);
+
     try {
       await postsService.getActivePostById(postId);
     } catch (error) {
